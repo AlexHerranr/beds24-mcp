@@ -9,7 +9,7 @@ const config = loadConfig();
 // Spawn beds24-mcp over stdio and surface its tools to the LLM via whapi-agent.
 const transport = new StdioClientTransport({
   command: "npx",
-  args: ["-y", "beds24-mcp"],
+  args: ["-y", "@herrandynamics/beds24-mcp"],
   env: {
     BEDS24_READ_TOKEN: process.env["BEDS24_READ_TOKEN"]!,
     ...(process.env["BEDS24_WRITE_REFRESH_TOKEN"]

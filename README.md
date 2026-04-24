@@ -9,7 +9,7 @@ MCP server for [Beds24](https://beds24.com). Ten tools for querying and managing
 ## Install
 
 ```bash
-npx -y beds24-mcp
+npx -y @herrandynamics/beds24-mcp
 ```
 
 Published on npm. No global install required.
@@ -36,7 +36,7 @@ Tokens are read from the environment and never written to disk by this server.
   "mcpServers": {
     "beds24": {
       "command": "npx",
-      "args": ["-y", "beds24-mcp"],
+      "args": ["-y", "@herrandynamics/beds24-mcp"],
       "env": {
         "BEDS24_READ_TOKEN": "your_read_token",
         "BEDS24_WRITE_REFRESH_TOKEN": "your_write_refresh_token"
@@ -94,14 +94,14 @@ The client picks the matching tool. Write operations trigger a confirmation prom
 ## Transports
 
 - **`stdio`** (default) — used by Claude Desktop, Claude Code, Cursor, and every MCP client that spawns the server as a subprocess.
-- **HTTP/SSE** — opt-in for remote deployments. Run `npx -y beds24-mcp --http` and the server listens on `HTTP_PORT` with `/sse` for the event stream and `/messages` for tool calls.
+- **HTTP/SSE** — opt-in for remote deployments. Run `npx -y @herrandynamics/beds24-mcp --http` and the server listens on `HTTP_PORT` with `/sse` for the event stream and `/messages` for tool calls.
 
 ## Debugging
 
 Run the server in isolation with the official MCP Inspector:
 
 ```bash
-BEDS24_READ_TOKEN=your_token npx @modelcontextprotocol/inspector npx -y beds24-mcp
+BEDS24_READ_TOKEN=your_token npx @modelcontextprotocol/inspector npx -y @herrandynamics/beds24-mcp
 ```
 
 The inspector lists the tools, lets you call each one interactively, and shows the raw JSON payloads.

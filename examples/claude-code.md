@@ -5,7 +5,7 @@ Add `beds24-mcp` to Claude Code's MCP servers from the CLI:
 ```bash
 claude mcp add beds24 \
   --env BEDS24_READ_TOKEN=your_read_token \
-  -- npx -y beds24-mcp
+  -- npx -y @herrandynamics/beds24-mcp
 ```
 
 For write tools:
@@ -14,7 +14,7 @@ For write tools:
 claude mcp add beds24 \
   --env BEDS24_READ_TOKEN=your_read_token \
   --env BEDS24_WRITE_REFRESH_TOKEN=your_write_refresh_token \
-  -- npx -y beds24-mcp
+  -- npx -y @herrandynamics/beds24-mcp
 ```
 
 List registered servers:

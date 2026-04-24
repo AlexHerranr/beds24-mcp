@@ -15,7 +15,7 @@ Add `beds24-mcp` to the MCP servers list in Claude Desktop.
   "mcpServers": {
     "beds24": {
       "command": "npx",
-      "args": ["-y", "beds24-mcp"],
+      "args": ["-y", "@herrandynamics/beds24-mcp"],
       "env": {
         "BEDS24_READ_TOKEN": "your_read_token"
       }
@@ -31,7 +31,7 @@ Add `beds24-mcp` to the MCP servers list in Claude Desktop.
   "mcpServers": {
     "beds24": {
       "command": "npx",
-      "args": ["-y", "beds24-mcp"],
+      "args": ["-y", "@herrandynamics/beds24-mcp"],
       "env": {
         "BEDS24_READ_TOKEN": "your_read_token",
         "BEDS24_WRITE_REFRESH_TOKEN": "your_write_refresh_token"

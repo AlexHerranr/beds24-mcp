@@ -1,11 +1,14 @@
 {
-  "name": "beds24-mcp",
+  "name": "@herrandynamics/beds24-mcp",
   "version": "0.1.0",
   "description": "MCP server for Beds24. Query and manage bookings, properties, availability, and pricing from any MCP-compatible client.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
     "beds24-mcp": "dist/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
     "dist",
