@@ -1,0 +1,75 @@
+{
+  "name": "beds24-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Beds24. Query and manage bookings, properties, availability, and pricing from any MCP-compatible client.",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "beds24-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --ext .ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "beds24",
+    "hospitality",
+    "hotel",
+    "booking",
+    "pms",
+    "property-management",
+    "claude",
+    "anthropic",
+    "typescript",
+    "ai-tools"
+  ],
+  "author": {
+    "name": "Alexander H.",
+    "email": "administrador@tealquilamos.com",
+    "url": "https://github.com/AlexHerranr"
+  },
+  "contributors": [
+    "Herran Dynamics S.A.S."
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexHerranr/beds24-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AlexHerranr/beds24-mcp/issues"
+  },
+  "homepage": "https://github.com/AlexHerranr/beds24-mcp#readme",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4",
+    "express": "^4.21.2",
+    "p-limit": "^6.2.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.0",
+    "@typescript-eslint/parser": "^8.18.0",
+    "eslint": "^9.17.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
