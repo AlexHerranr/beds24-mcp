@@ -4,6 +4,7 @@ import {
   ListToolsRequestSchema,
 } from "@modelcontextprotocol/sdk/types.js";
 import type { z } from "zod";
+import { zodToJsonSchema as zodToJson } from "zod-to-json-schema";
 import { Beds24Client } from "./beds24/client.js";
 import { TokenManager } from "./beds24/auth.js";
 import type { Config } from "./config.js";
@@ -122,60 +123,12 @@ function errorResult(message: string): {
 }
 
 function zodToJsonSchema(schema: z.ZodType<unknown>): Record<string, unknown> {
-  const def = (schema as unknown as { _def?: { typeName?: string } })._def;
-  if (def?.typeName !== "ZodObject") {
+  const json = zodToJson(schema, {
+    target: "openApi3",
+    $refStrategy: "none",
+  }) as Record<string, unknown>;
+  if (json["type"] !== "object") {
     return { type: "object", properties: {} };
   }
-  const shape = (schema as unknown as { shape: Record<string, z.ZodType<unknown>> })
-    .shape;
-  const properties: Record<string, unknown> = {};
-  const required: string[] = [];
-  for (const [key, node] of Object.entries(shape)) {
-    properties[key] = zodFieldToJson(node);
-    if (!isOptional(node)) required.push(key);
-  }
-  return { type: "object", properties, required };
-}
-
-function zodFieldToJson(node: z.ZodType<unknown>): Record<string, unknown> {
-  const def = (node as unknown as {
-    _def?: {
-      typeName?: string;
-      description?: string;
-      innerType?: z.ZodType<unknown>;
-      checks?: { kind: string; value?: unknown }[];
-      values?: unknown[];
-    };
-  })._def;
-  const typeName = def?.typeName;
-  const description = def?.description;
-
-  const base: Record<string, unknown> = (() => {
-    switch (typeName) {
-      case "ZodString":
-        return { type: "string" };
-      case "ZodNumber":
-        return { type: "number" };
-      case "ZodBoolean":
-        return { type: "boolean" };
-      case "ZodArray":
-        return { type: "array" };
-      case "ZodEnum":
-        return { type: "string", enum: def?.values ?? [] };
-      case "ZodOptional":
-      case "ZodDefault":
-        return zodFieldToJson(def!.innerType as z.ZodType<unknown>);
-      default:
-        return { type: "string" };
-    }
-  })();
-
-  if (description) base.description = description;
-  return base;
-}
-
-function isOptional(node: z.ZodType<unknown>): boolean {
-  const typeName = (node as unknown as { _def?: { typeName?: string } })._def
-    ?.typeName;
-  return typeName === "ZodOptional" || typeName === "ZodDefault";
+  return json;
 }

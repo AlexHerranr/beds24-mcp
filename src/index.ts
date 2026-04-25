@@ -47,21 +47,29 @@ async function startHttp(
   const app = express();
   app.use(express.json({ limit: "1mb" }));
 
+  // Map keyed by SSE sessionId so multiple concurrent clients can connect.
+  const transports = new Map<string, SSEServerTransport>();
+
   app.get("/health", (_req, res) => {
     res.status(200).json({ status: "ok" });
   });
 
   app.get("/sse", async (_req, res) => {
     const transport = new SSEServerTransport("/messages", res);
+    transports.set(transport.sessionId, transport);
+    res.on("close", () => {
+      transports.delete(transport.sessionId);
+      logger.debug("sse client disconnected", { sessionId: transport.sessionId });
+    });
     await server.connect(transport);
-    logger.info("sse transport connected");
+    logger.info("sse client connected", { sessionId: transport.sessionId });
   });
 
   app.post("/messages", async (req, res) => {
-    const transport = (server as unknown as { _transport?: SSEServerTransport })
-      ._transport;
+    const sessionId = String(req.query["sessionId"] ?? "");
+    const transport = transports.get(sessionId);
     if (!transport) {
-      res.status(400).json({ error: "no active SSE connection" });
+      res.status(400).json({ error: "no active SSE session for given sessionId" });
       return;
     }
     await transport.handlePostMessage(req, res, req.body);
